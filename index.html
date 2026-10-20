@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>용마로지스 포워딩 시안 B</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap">
+<style>
+/* Layout B: 흰 헤더 → 다크 히어로(좌 메시지 / 우 문의 유형 바로가기) + 수치 띠 → 흰 소개 → 연한 서비스 목록 → 다크 강점 → 연한 국내 연계 트랙 → 흰 인증 롤링 → 연한 절차 → 다크 Contact. 강조색 밝은 면 navy, 어두운 면 sky. 그라데이션·그림자 없음. */
+:root{
+  --canvas:#ffffff; --panel:#f5f6f8; --dark:#14181f; --dark2:#1e2430; --dark3:#12161d;
+  --ink:#1d1d1f; --ink2:#4b4f58; --ink3:#6b6f78; --on-dark:#f2f4f7; --on-dark2:#aab1bd;
+  --navy:#003b8c; --sky:#3bb4e8; --deep:#003b8c; --on-brand:#ffffff;
+  --line:#d8dce3; --dline:#2c3340; --fline:#3a4252;
+  --ok-bg:#12301f; --ok-fg:#bff0cf; --err-bg:#3a1a1a; --err-fg:#ffd0d0; --info-bg:#1b2a3d; --info-fg:#cfe6fa;
+  --font:'Nanum Barun Gothic','Nanum Gothic','Malgun Gothic',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --canvas:#101318; --panel:#171b22; --dark:#0a0c10; --dark2:#171c25; --dark3:#0f1218;
+  --ink:#f2f4f7; --ink2:#b9bfca; --ink3:#8f96a3;
+  --navy:#6cc6f0; --deep:#3bb4e8; --on-brand:#0a0c10; --line:#2b3140; --dline:#262c38; color-scheme:dark}
+  .brand img{background:#fff;padding:4px 10px}}
+:root[data-theme="dark"]{
+  --canvas:#101318; --panel:#171b22; --dark:#0a0c10; --dark2:#171c25; --dark3:#0f1218;
+  --ink:#f2f4f7; --ink2:#b9bfca; --ink3:#8f96a3;
+  --navy:#6cc6f0; --deep:#3bb4e8; --on-brand:#0a0c10; --line:#2b3140; --dline:#262c38; color-scheme:dark}
+:root[data-theme="dark"] .brand img{background:#fff;padding:4px 10px}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--canvas);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.65;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.band{margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:1120px;margin:0 auto;padding-block:96px}
+@media(max-width:820px){.wrap{padding-block:64px}}
+h1,h2,h3,p{margin:0}
+h2{font-size:clamp(26px,4vw,40px);font-weight:800;line-height:1.3;letter-spacing:-.02em;text-wrap:balance}
+h2 .c{display:block;font-weight:400}
+h2 .a{display:block;color:var(--navy)}
+.dk h2 .a{color:var(--sky)}
+.eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:12px}
+.dk .eyebrow{color:var(--on-dark2)}
+.lead{font-size:18px;color:var(--ink2);max-width:60ch;margin-top:20px}
+.dk .lead{color:var(--on-dark2)}
+.panel{background:var(--panel)}
+.dk{background:var(--dark);color:var(--on-dark)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+.head2{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end}
+.head2>*{min-width:0}
+.head2 .lead{margin-top:0}
+@media(max-width:860px){.head2{grid-template-columns:1fr;gap:16px}}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--canvas);border-bottom:1px solid var(--line)}
+.nav{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.brand{display:inline-flex;align-items:center;text-decoration:none}
+.brand img{display:block;height:34px;width:auto;border-radius:6px}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+.nav ul a{text-decoration:none;font-size:14px;color:var(--ink2);font-weight:700;position:relative;padding-block:6px}
+.nav ul a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--navy);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.nav ul a:hover{color:var(--navy)}
+.nav ul a:hover::after{transform:scaleX(1)}
+.prog{position:absolute;left:0;bottom:-1px;height:3px;width:100%;background:var(--sky);transform:scaleX(0);transform-origin:left}
+@media(max-width:820px){.nav ul{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 24px;border-radius:999px;background:var(--deep);color:var(--on-brand);font-weight:800;font-size:15px;text-decoration:none;border:0;cursor:pointer;font-family:inherit;transition:transform .2s,filter .2s}
+.btn:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.btn:active{transform:scale(.98)}
+.dk .btn{background:var(--sky);color:#0a0c10}
+.btn.ghost{background:transparent;color:var(--on-dark);border:1px solid var(--on-dark2)}
+
+/* hero */
+.hero{position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:end;padding-block:104px 64px}
+.hero .wrap>*{min-width:0}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:40px;padding-block:72px 48px}}
+.hero h1{font-size:clamp(34px,6vw,62px);font-weight:800;line-height:1.18;letter-spacing:-.035em;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--sky);display:block}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+.quick{background:var(--dark2);border:1px solid var(--dline);border-radius:16px;padding:24px}
+.quick p.q{font-weight:800;font-size:18px}
+.quick p.s{color:var(--on-dark2);font-size:14px;margin-top:4px}
+.quick ul{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:8px}
+.quick a{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;padding:13px 16px;border-radius:10px;background:var(--dark3);border:1px solid var(--dline);font-weight:700;transition:border-color .2s,transform .2s}
+.quick a span{font-size:12px;letter-spacing:.08em;color:var(--on-dark2);font-weight:700}
+.quick a:hover{border-color:var(--sky);transform:translateX(4px)}
+.quick a:hover span{color:var(--sky)}
+.lanes{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.5}
+.lanes path{fill:none;stroke:var(--sky);stroke-width:1.3;stroke-dasharray:2 9;stroke-linecap:round}
+.lanes circle{fill:var(--sky)}
+.lanes text{font-family:var(--font);font-size:13px;font-weight:700;fill:var(--on-dark2);letter-spacing:.08em}
+
+.figs{border-top:1px solid var(--dline)}
+.figs .in{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.fig{padding:28px 24px 32px 0;min-width:0}
+.fig+.fig{padding-left:24px;border-left:1px solid var(--dline)}
+.fig b{display:block;font-size:clamp(32px,4.4vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.fig b small{font-size:18px;font-weight:700;margin-left:3px}
+.fig span{display:block;margin-top:6px;font-size:14px;color:var(--on-dark2)}
+@media(max-width:820px){.figs .in{grid-template-columns:1fr 1fr}.fig:nth-child(3){padding-left:0;border-left:0}.fig:nth-child(n+3){border-top:1px solid var(--dline)}}
+
+/* about */
+.about{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:start}
+.about>*{min-width:0}
+@media(max-width:860px){.about{grid-template-columns:1fr;gap:36px}}
+.stmt{font-size:clamp(20px,2.4vw,24px);line-height:1.6;margin-top:28px;max-width:34em}
+.stmt strong{color:var(--navy)}
+.facts{display:grid;grid-template-columns:1fr 1fr;margin:0;border-top:2px solid var(--ink)}
+.facts div{padding:18px 16px 18px 0;border-bottom:1px solid var(--line);min-width:0}
+.facts div:nth-child(even){padding-left:16px;border-left:1px solid var(--line)}
+.facts dt{color:var(--ink3);font-size:13px;font-weight:700}
+.facts dd{margin:4px 0 0;font-weight:800;font-size:17px}
+@media(max-width:480px){.facts{grid-template-columns:1fr}.facts div:nth-child(even){padding-left:0;border-left:0}}
+
+/* services rows */
+.svc{margin-top:48px;border-top:2px solid var(--ink)}
+.svc article{display:grid;grid-template-columns:120px 220px 1fr;gap:24px;align-items:baseline;padding:28px 0;border-bottom:1px solid var(--line);position:relative}
+.svc article>*{min-width:0}
+.svc article::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--navy);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.svc article:hover::after{transform:scaleX(1)}
+.svc .tag{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--navy)}
+.svc h3{font-size:22px;font-weight:800;letter-spacing:-.01em}
+.svc ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.svc li{font-size:14px;color:var(--ink2);background:var(--canvas);border:1px solid var(--line);border-radius:999px;padding:6px 14px;transition:border-color .2s,color .2s}
+.svc article:hover li{border-color:var(--navy);color:var(--ink)}
+@media(max-width:820px){.svc article{grid-template-columns:1fr;gap:8px}}
+.note{color:var(--ink3);font-size:13px;margin-top:20px}
+
+/* strengths (dark) */
+.str{display:grid;grid-template-columns:repeat(3,1fr);margin-top:48px;border-top:1px solid var(--dline)}
+.st{padding:32px 28px 32px 0;border-bottom:1px solid var(--dline);min-width:0;transition:transform .3s}
+.st:not(:nth-child(3n+1)){padding-left:28px;border-left:1px solid var(--dline)}
+.st:hover{transform:translateY(-4px)}
+.st .n{font-size:44px;font-weight:800;color:var(--sky);letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.st .n small{font-size:18px;margin-left:3px}
+.st h3{font-size:18px;font-weight:800;margin-top:12px}
+.st p{color:var(--on-dark2);font-size:15px;margin-top:6px}
+@media(max-width:900px){.str{grid-template-columns:1fr 1fr}.st:not(:nth-child(3n+1)){padding-left:0;border-left:0}.st:nth-child(even){padding-left:24px;border-left:1px solid var(--dline)}}
+@media(max-width:560px){.str{grid-template-columns:1fr}.st:nth-child(even){padding-left:0;border-left:0}}
+
+/* integrated track */
+.track{list-style:none;padding:0;margin:56px 0 0;display:grid;grid-template-columns:repeat(5,1fr);position:relative}
+.track::before{content:"";position:absolute;left:10%;right:10%;top:15px;height:2px;background:var(--line)}
+.track::after{content:"";position:absolute;left:10%;top:15px;height:2px;width:80%;background:var(--navy);transform-origin:left;transform:scaleX(1)}
+.track li{position:relative;text-align:center;padding:0 8px;min-width:0}
+.track .dot{display:block;width:32px;height:32px;margin:0 auto;border-radius:50%;background:var(--canvas);border:2px solid var(--navy);position:relative;z-index:1}
+.track li.hi .dot{background:var(--navy)}
+.track b{display:block;margin-top:16px;font-weight:800}
+.track span{display:block;font-size:14px;color:var(--ink2);margin-top:2px}
+.track li.hi .box{background:var(--deep);color:var(--on-brand);border-radius:12px;padding:10px 8px;margin-top:10px}
+.track li.hi .box b{margin-top:0}
+.track li.hi .box span{color:var(--on-brand)}
+.track li:not(.hi) .box{padding:10px 8px;margin-top:10px}
+.track li:not(.hi) .box b{margin-top:0}
+@media(max-width:760px){
+  .track{grid-template-columns:1fr;gap:0;margin-top:40px}
+  .track::before,.track::after{left:15px;right:auto;top:16px;bottom:16px;width:2px;height:auto}
+  .track::after{transform-origin:top}
+  .track li{display:grid;grid-template-columns:32px 1fr;gap:16px;text-align:left;padding:0 0 18px}
+  .track .dot{margin:0}
+  .track .box{margin-top:0!important}
+}
+
+/* certs */
+.marq{overflow:hidden;margin-top:40px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.certs{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px}
+.marq .certs{margin:0;flex-wrap:nowrap;padding-right:10px}
+.marq .tr{display:flex;width:max-content}
+.certs span{white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:10px 20px;font-weight:700;font-size:14px;transition:background .25s,color .25s}
+.certs span:hover{background:var(--deep);color:var(--on-brand);border-color:var(--deep)}
+
+/* process */
+.steps{list-style:none;padding:0;margin:48px 0 0;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.steps li{background:var(--canvas);border-radius:16px;padding:24px 20px;min-width:0;position:relative;transition:transform .3s}
+.steps li:hover{transform:translateY(-6px)}
+.steps .k{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;color:var(--navy)}
+.steps .k::after{content:"";flex:1;height:2px;background:var(--navy);transform-origin:left}
+.steps h3{font-size:18px;font-weight:800;margin-top:14px}
+.steps p{font-size:14px;color:var(--ink2);margin-top:6px}
+@media(max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.steps{grid-template-columns:1fr}}
+
+/* contact */
+.contact .wrap{display:grid;grid-template-columns:5fr 7fr;gap:56px;align-items:start}
+.contact .wrap>*{min-width:0}
+@media(max-width:900px){.contact .wrap{grid-template-columns:1fr;gap:40px}}
+.reach{margin:36px 0 0;display:grid;gap:18px}
+.reach dt{font-size:13px;color:var(--on-dark2);font-weight:700}
+.reach dd{margin:2px 0 0;font-size:22px;font-weight:800;user-select:all}
+.reach dd.s{font-size:15px;font-weight:400;user-select:text}
+form{background:var(--dark2);border-radius:16px;padding:32px;display:grid;gap:18px}
+@media(max-width:560px){form{padding:22px}}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.row>*{min-width:0}
+@media(max-width:560px){.row{grid-template-columns:1fr}}
+label,.lbl{display:grid;gap:6px;font-size:14px;font-weight:700;color:var(--on-dark)}
+label i,.lbl i{font-style:normal;color:var(--sky)}
+input,textarea{font:inherit;font-size:16px;color:var(--on-dark);background:var(--dark3);border:1px solid var(--fline);border-radius:8px;padding:12px 14px;width:100%;min-height:46px;transition:border-color .2s,transform .2s}
+textarea{min-height:120px;resize:vertical}
+input::placeholder,textarea::placeholder{color:#7d8593}
+input:focus,textarea:focus{border-color:var(--sky);outline:none;transform:translateY(-1px)}
+.types{display:flex;flex-wrap:wrap;gap:8px}
+.types button{font:inherit;font-size:14px;font-weight:700;color:var(--on-dark);background:var(--dark3);border:1px solid var(--fline);border-radius:999px;padding:9px 16px;min-height:40px;cursor:pointer;transition:border-color .2s,background .2s}
+.types button:hover{border-color:var(--sky)}
+.types button[aria-pressed="true"]{background:var(--sky);border-color:var(--sky);color:#0a0c10}
+.detail{display:grid;gap:16px;border-top:1px solid var(--fline);padding-top:18px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:14px;color:var(--on-dark2)}
+.consent input{width:20px;min-height:20px;margin-top:3px;flex:none;accent-color:var(--sky)}
+.consent a{color:var(--sky)}
+form .btn{min-height:50px;width:100%}
+.msg{font-size:15px;border-radius:8px;padding:12px 14px}
+.msg.ok{background:var(--ok-bg);color:var(--ok-fg)}
+.msg.err{background:var(--err-bg);color:var(--err-fg)}
+.msg.info{background:var(--info-bg);color:var(--info-fg)}
+
+footer{border-top:1px solid var(--dline);font-size:13px;color:var(--on-dark2)}
+footer .in{max-width:1120px;margin:0 auto;padding-block:32px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px}
+footer b{color:var(--on-dark)}
+
+/* motion */
+@media (prefers-reduced-motion:no-preference){
+  @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  @keyframes flow{to{stroke-dashoffset:-110}}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .hero .eyebrow{animation:up .7s .05s both cubic-bezier(.2,.7,.2,1)}
+  .hero h1{animation:up .8s .15s both cubic-bezier(.2,.7,.2,1)}
+  .hero h1 em{animation:up .8s .35s both cubic-bezier(.2,.7,.2,1)}
+  .hero .lead{animation:up .8s .5s both cubic-bezier(.2,.7,.2,1)}
+  .hero .cta{animation:up .8s .65s both cubic-bezier(.2,.7,.2,1)}
+  .quick{animation:up .9s .55s both cubic-bezier(.2,.7,.2,1)}
+  .quick li{animation:up .5s both}
+  .quick li:nth-child(1){animation-delay:.8s}.quick li:nth-child(2){animation-delay:.88s}.quick li:nth-child(3){animation-delay:.96s}.quick li:nth-child(4){animation-delay:1.04s}.quick li:nth-child(5){animation-delay:1.12s}
+  .fig{animation:up .7s both}
+  .fig:nth-child(1){animation-delay:.9s}.fig:nth-child(2){animation-delay:1s}.fig:nth-child(3){animation-delay:1.1s}.fig:nth-child(4){animation-delay:1.2s}
+  .lanes path{animation:flow 7s linear infinite}
+  .lanes path:nth-of-type(2n){animation-duration:10s}
+  .marq .tr{animation:slide 40s linear infinite}
+  .marq:hover .tr{animation-play-state:paused}
+  .track li.hi .box{animation:bob 4s ease-in-out infinite}
+  .msg{animation:up .4s both}
+  @supports (animation-timeline:view()){
+    .reveal{animation:up linear both;animation-timeline:view();animation-range:entry 0% entry 45%}
+    .track::after{animation:grow linear both;animation-timeline:view();animation-range:entry 20% cover 45%}
+    .steps .k::after{animation:grow linear both;animation-timeline:view();animation-range:entry 10% entry 80%}
+  }
+}
+@media (prefers-reduced-motion:no-preference) and (max-width:760px){
+  @keyframes growy{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  @supports (animation-timeline:view()){.track::after{animation-name:growy}}
+}
+</style>
+
+</head>
+<body>
+<header class="top band">
+  <div class="nav">
+    <a class="brand" href="#top" aria-label="용마로지스 홈"><img alt="용마로지스" width="183" height="36" src="data:image/png;base64,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"></a>
+    <ul>
+      <li><a href="#about">회사 소개</a></li>
+      <li><a href="#services">서비스</a></li>
+      <li><a href="#strengths">강점</a></li>
+      <li><a href="#process">진행 절차</a></li>
+    </ul>
+    <a class="btn" href="#contact">견적 문의</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero dk band">
+  <svg class="lanes" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M1010 180 C 820 40, 520 40, 300 120"/>
+    <path d="M1010 180 C 840 360, 460 420, 140 330"/>
+    <path d="M1010 180 C 960 300, 900 380, 860 430"/>
+    <path d="M1010 180 C 940 190, 880 220, 820 260"/>
+    <circle cx="1010" cy="180" r="6"/><text x="1024" y="168">KOREA</text>
+    <circle cx="300" cy="120" r="4"/><text x="250" y="104">EUROPE</text>
+    <circle cx="140" cy="330" r="4"/><text x="100" y="356">AMERICAS</text>
+    <circle cx="860" cy="430" r="4"/><text x="790" y="458">S.E. ASIA</text>
+    <circle cx="820" cy="260" r="4"/><text x="756" y="252">CHINA</text>
+  </svg>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Yongma Logis Forwarding</p>
+      <h1>수출입부터 국내 배송까지,<em>한 번에 연결합니다.</em></h1>
+      <p class="lead">동아쏘시오그룹의 일원으로 1983년부터 제약·헬스·뷰티 물류를 직접 운영해 온 용마로지스의 해상·항공 포워딩입니다.</p>
+      <div class="cta">
+        <a class="btn" href="#contact">견적 문의하기</a>
+        <a class="btn ghost" href="#services">서비스 보기</a>
+      </div>
+    </div>
+    <nav class="quick" aria-label="문의 유형 바로가기">
+      <p class="q">어떤 화물을 보내시나요?</p>
+      <p class="s">유형을 고르면 문의 폼이 그 유형으로 채워집니다.</p>
+      <ul>
+        <li><a href="#contact" data-type="해상 수출입">해상 수출입<span>OCEAN</span></a></li>
+        <li><a href="#contact" data-type="항공 수출입">항공 수출입<span>AIR</span></a></li>
+        <li><a href="#contact" data-type="수출입 통관">수출입 통관<span>CUSTOMS</span></a></li>
+        <li><a href="#contact" data-type="국제특송">국제특송<span>EXPRESS</span></a></li>
+        <li><a href="#contact" data-type="기타">기타 문의<span>OTHER</span></a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="figs">
+    <div class="in">
+      <div class="fig"><b>1983<small>년</small></b><span>설립, 40년 이상의 물류 운영</span></div>
+      <div class="fig"><b>4,238<small>억원</small></b><span>매출액 (2025.12 기준)</span></div>
+      <div class="fig"><b>810<small>명</small></b><span>구성원 (2025.12 기준)</span></div>
+      <div class="fig"><b>AEO<small> A등급</small></b><span>수출입안전관리우수업체</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="about">
+  <div class="wrap about">
+    <div class="reveal">
+      <p class="eyebrow">Company</p>
+      <h2><span class="c">동아쏘시오그룹의 일원으로서</span><span class="a">H&amp;B 물류산업을 선도합니다.</span></h2>
+      <p class="stmt">택배, 보관(3PL), 운송, 포워딩을 모두 직접 운영합니다. 의약품 위탁 배송 시장 <strong>국내 점유율 1위(41.2%)</strong>로 쌓은 품질관리 기준을 수출입 물류에도 그대로 적용합니다.</p>
+    </div>
+    <dl class="facts reveal">
+      <div><dt>회사명</dt><dd>용마로지스 주식회사</dd></div>
+      <div><dt>설립</dt><dd>1983년 7월 1일</dd></div>
+      <div><dt>사업 분야</dt><dd>택배 · 보관 · 운송 · 포워딩</dd></div>
+      <div><dt>주요 고객사</dt><dd>300개 이상</dd></div>
+      <div><dt>해외 네트워크</dt><dd>30여 개국 파트너</dd></div>
+      <div><dt>본사</dt><dd>경기도 김포시 고촌읍 아라육로 78</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="panel band" id="services">
+  <div class="wrap">
+    <div class="head2">
+      <div><p class="eyebrow">Services</p>
+      <h2><span class="c">화물에 맞는 운송 수단을 선택하고,</span><span class="a">통관까지 함께 처리합니다.</span></h2></div>
+      <p class="lead">해상·항공 운송과 통관, 국제특송을 한 창구에서 맡깁니다.</p>
+    </div>
+    <div class="svc">
+      <article class="reveal"><span class="tag">OCEAN</span><h3>해상 수출입</h3><ul><li>FCL / LCL 수출입</li><li>CY / CFS 반출입 연계</li><li>Booking · S/R · B/L 관리</li></ul></article>
+      <article class="reveal"><span class="tag">AIR</span><h3>항공 수출입</h3><ul><li>항공 수출입 포워딩</li><li>긴급·소량 화물 대응</li><li>화물 위치 추적과 공유</li></ul></article>
+      <article class="reveal"><span class="tag">CUSTOMS</span><h3>수출입 통관</h3><ul><li>수출입 통관 서비스</li><li>AEO 공인업체 기반 절차</li><li>서류 사전 검토</li></ul></article>
+      <article class="reveal"><span class="tag">EXPRESS</span><h3>국제특송</h3><ul><li>국제특송 A to Z 제공</li><li>바이오 특송 서비스</li><li>샘플·소형 화물 대응</li></ul></article>
+    </div>
+    <p class="note">세부 서비스 범위와 취급 가능 품목은 문의 시 화물 조건에 맞춰 안내드립니다.</p>
+  </div>
+</section>
+
+<section class="dk band" id="strengths">
+  <div class="wrap">
+    <p class="eyebrow">Why Yongma Logis</p>
+    <h2><span class="c">포워더에게 필요한 신뢰를</span><span class="a">운영 실적으로 증명합니다.</span></h2>
+    <div class="str">
+      <div class="st reveal"><div class="n">AEO<small> A등급</small></div><h3>공인된 통관·보안 신뢰도</h3><p>2018년 1월 화물운송주선업자 부문에서 관세청 AEO A등급을 받아 유지하고 있습니다.</p></div>
+      <div class="st reveal"><div class="n">30<small>여 개국</small></div><h3>글로벌 파트너 네트워크</h3><p>현지 파트너와 긴밀히 협력해 빠른 정보 전달을 지원합니다.</p></div>
+      <div class="st reveal"><div class="n">41.2<small>%</small></div><h3>헬스케어 물류 1위 경험</h3><p>의약품 위탁 배송 시장 점유율 국내 1위. 정온물류와 KGSP 적격업소 기준을 운영합니다.</p></div>
+      <div class="st reveal"><div class="n">38<small>개</small></div><h3>전국 직영 배송센터</h3><p>수입 화물을 전국 직영 인프라로 배송하고 클레임도 직접 응대합니다.</p></div>
+      <div class="st reveal"><div class="n">99.8<small>%</small></div><h3>택배 익일 배송률</h3><p>택배서비스평가 A+ 등급을 6년 연속 받은 배송 품질을 국내 연계 구간에 적용합니다.</p></div>
+      <div class="st reveal"><div class="n">5<small>종</small></div><h3>ISO 인증 체계</h3><p>품질·환경·의료기기 품질·정보보안·안전보건 경영시스템을 인증받았습니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel band" id="integrated">
+  <div class="wrap">
+    <div class="head2">
+      <div><p class="eyebrow">Integrated Logistics</p>
+      <h2><span class="c">수출입에서 국내 배송까지,</span><span class="a">끊기지 않는 하나의 흐름입니다.</span></h2></div>
+      <p class="lead">해외 구간은 포워딩이 맡고, 국내 보관·운송·배송은 용마로지스 직영 인프라로 이어집니다. 담당 창구가 하나라 일정과 책임이 분명합니다.</p>
+    </div>
+    <ol class="track">
+      <li><i class="dot" aria-hidden="true"></i><div class="box"><b>해외 출발지</b><span>현지 파트너</span></div></li>
+      <li class="hi"><i class="dot" aria-hidden="true"></i><div class="box"><b>해상 · 항공</b><span>용마로지스 포워딩</span></div></li>
+      <li><i class="dot" aria-hidden="true"></i><div class="box"><b>수출입 통관</b><span>AEO A등급</span></div></li>
+      <li><i class="dot" aria-hidden="true"></i><div class="box"><b>보관 (3PL)</b><span>30개 이상 센터</span></div></li>
+      <li><i class="dot" aria-hidden="true"></i><div class="box"><b>운송 · 택배</b><span>전국 직영 배송망</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band" id="certs">
+  <div class="wrap" style="padding-block:80px">
+    <div class="head2">
+      <div><p class="eyebrow">Certifications</p>
+      <h2><span class="c">공인 기관이 확인한</span><span class="a">품질과 안전 기준입니다.</span></h2></div>
+      <p class="lead">통관·보안, 품질, 환경, 정보보안, 의약품 유통 기준을 인증받아 운영합니다.</p>
+    </div>
+    <div class="certs" id="certs-list">
+      <span>AEO 수출입안전관리우수업체</span><span>ISO 9001</span><span>ISO 14001</span><span>ISO 13485</span><span>ISO 27001</span><span>ISO 45001</span><span>우수물류기업 인증</span><span>우수녹색물류실천기업</span><span>EcoVadis Bronze</span><span>의약품유통관리기준(KGSP) 적격업소</span>
+    </div>
+  </div>
+</section>
+
+<section class="panel band" id="process">
+  <div class="wrap">
+    <p class="eyebrow">Process</p>
+    <h2><span class="c">문의부터 도착까지,</span><span class="a">다섯 단계로 진행합니다.</span></h2>
+    <ol class="steps">
+      <li class="reveal"><span class="k">STEP 1</span><h3>문의 접수</h3><p>구간, 품목, 물량을 알려주세요.</p></li>
+      <li class="reveal"><span class="k">STEP 2</span><h3>견적 안내</h3><p>운임과 Local Charge, 유효기간을 안내합니다.</p></li>
+      <li class="reveal"><span class="k">STEP 3</span><h3>Booking</h3><p>선적 일정(ETD)을 확정합니다.</p></li>
+      <li class="reveal"><span class="k">STEP 4</span><h3>선적 · 통관</h3><p>서류 확인과 통관, 운송 상태를 공유합니다.</p></li>
+      <li class="reveal"><span class="k">STEP 5</span><h3>도착 · 배송</h3><p>ETA 확인 후 국내 배송까지 연결합니다.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="contact dk band" id="contact">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Contact Us</p>
+      <h2><span class="c">운송 조건을 남겨주시면</span><span class="a">영업일 기준으로 답변드립니다.</span></h2>
+      <p class="lead">구간과 물량을 함께 적어주시면 견적이 빨라집니다. 급한 문의는 전화로 연락해 주세요.</p>
+      <dl class="reach">
+        <div><dt>대표번호</dt><dd>1800-8572</dd><dd class="s">평일 08:30~18:30 · 토요일 08:30~15:00</dd></div>
+        <div><dt>본사</dt><dd class="s">경기도 김포시 고촌읍 아라육로 78</dd></div>
+      </dl>
+    </div>
+    <form id="f" novalidate>
+      <div class="row">
+        <label for="company">회사명 <i>*</i><input id="company" name="company" autocomplete="organization" required></label>
+        <label for="name">담당자명 <i>*</i><input id="name" name="name" autocomplete="name" required></label>
+      </div>
+      <div class="row">
+        <label for="email">이메일 <i>*</i><input id="email" name="email" type="email" autocomplete="email" required></label>
+        <label for="phone">연락처 <i>*</i><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="010-0000-0000" required></label>
+      </div>
+      <div class="lbl" id="typel">문의 유형 <i>*</i>
+        <div class="types" role="group" aria-labelledby="typel" id="types">
+          <button type="button" aria-pressed="false">해상 수출입</button><button type="button" aria-pressed="false">항공 수출입</button><button type="button" aria-pressed="false">수출입 통관</button><button type="button" aria-pressed="false">국제특송</button><button type="button" aria-pressed="false">기타</button>
+        </div>
+      </div>
+      <div class="detail" id="detail" hidden>
+        <div class="row">
+          <label for="pol">출발지 (POL)<input id="pol" name="pol" placeholder="예: 부산"></label>
+          <label for="pod">도착지 (POD)<input id="pod" name="pod" placeholder="예: Shanghai"></label>
+        </div>
+        <div class="row">
+          <label for="cargo">품목<input id="cargo" name="cargo"></label>
+          <label for="vol">예상 물량<input id="vol" name="vol" placeholder="예: 20FT 1대 / 5CBM / 300kg"></label>
+        </div>
+        <label for="etd">희망 ETD<input id="etd" name="etd" type="date"></label>
+      </div>
+      <label for="body">문의 내용 <i>*</i><textarea id="body" name="body" required></textarea></label>
+      <label class="consent" for="agree"><input id="agree" name="agree" type="checkbox" required><span>개인정보 수집·이용에 동의합니다. 수집 항목은 회사명, 담당자명, 이메일, 연락처, 문의 내용이며 문의 응대 목적으로만 사용합니다. <a href="#contact" id="policy">처리방침 보기</a></span></label>
+      <div id="out" role="status" aria-live="polite"></div>
+      <button class="btn" type="submit" id="send">문의 보내기</button>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="dk band">
+  <div class="in">
+    <div><b>용마로지스 주식회사</b> · 대표이사 황병운<br>경기도 김포시 고촌읍 아라육로 78 · 대표번호 1800-8572</div>
+    <div>동아쏘시오그룹 · 매출·구성원 수치는 2025년 12월 기준</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var type='',btns=[].slice.call(document.querySelectorAll('#types button'));
+  function setType(t){
+    type=t;btns.forEach(function(b){b.setAttribute('aria-pressed',b.textContent===t)});
+    $('detail').hidden=!/해상|항공/.test(t);
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){setType(b.textContent)})});
+  [].forEach.call(document.querySelectorAll('.quick a'),function(a){
+    a.addEventListener('click',function(){setType(a.getAttribute('data-type'))});
+  });
+  function show(k,t){var o=$('out');o.innerHTML='';var d=document.createElement('div');d.className='msg '+k;d.textContent=t;o.appendChild(d)}
+  $('policy').addEventListener('click',function(e){e.preventDefault();show('info','개인정보 처리방침 문서는 사이트 배포 시 연결할 예정입니다. (확인 필요)')});
+  $('f').addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=function(id){return $(id).value.trim()};
+    var miss=['company','name','email','phone'].filter(function(id){return !v(id)});
+    if(miss.length){show('err','필수 항목을 모두 입력해 주세요.');$(miss[0]).focus();return}
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))){show('err','이메일 형식을 확인해 주세요.');$('email').focus();return}
+    if(!type){show('err','문의 유형을 선택해 주세요.');btns[0].focus();return}
+    if(!v('body')){show('err','문의 내용을 입력해 주세요.');$('body').focus();return}
+    if(!$('agree').checked){show('err','개인정보 수집·이용에 동의해 주세요.');return}
+    show('info','시안 페이지라 문의가 저장되지 않았습니다. 실제 배포 시 접수 서버를 연결합니다. 급한 문의는 1800-8572로 연락해 주세요.');
+  });
+})();
+</script>
+<script>
+(function(){
+  var hdr=document.querySelector('header.top'),bar=document.createElement('div');bar.className='prog';hdr.appendChild(bar);
+  function prog(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;bar.style.transform='scaleX('+(m>0?Math.min(1,h.scrollTop/m):0)+')'}
+  addEventListener('scroll',prog,{passive:true});prog();
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  /* certification marquee */
+  var c=document.getElementById('certs-list');
+  if(c){var box=document.createElement('div');box.className='marq';var tr=document.createElement('div');tr.className='tr';
+    c.parentNode.insertBefore(box,c);box.appendChild(tr);tr.appendChild(c);
+    var cl=c.cloneNode(true);cl.removeAttribute('id');cl.setAttribute('aria-hidden','true');tr.appendChild(cl);}
+  /* count-up */
+  [].forEach.call(document.querySelectorAll('.fig b,.st .n'),function(el){
+    var t=el.firstChild;if(!t||t.nodeType!==3)return;
+    var raw=t.nodeValue.trim().replace(/,/g,'');if(!/^\d+(\.\d+)?$/.test(raw))return;
+    var val=parseFloat(raw),dec=(raw.split('.')[1]||'').length,fin=t.nodeValue,year=/^19\d\d$/.test(raw);
+    function fmt(v){return year?String(Math.round(v)):v.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})}
+    function run(){var s=null;(function step(ts){if(s===null)s=ts;var p=Math.min(1,(ts-s)/1400),e=1-Math.pow(1-p,4);t.nodeValue=fmt(year?1900+(val-1900)*e:val*e);if(p<1)requestAnimationFrame(step);else t.nodeValue=fin})(performance.now())}
+    if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){if(es[0].isIntersecting){o.disconnect();run()}},{threshold:.6});o.observe(el)}
+  });
+})();
+</script>
+
+</body>
+</html>
